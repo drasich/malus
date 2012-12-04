@@ -59,6 +59,8 @@ func main() {
   //mat.rotate(-rotx, 0,1,0)
   mat.Rotate(-90, 1,0,0)
   player.Matrix = mat
+  cc := newControlComponent(&player)
+  player.AddComponent(*cc)
 
   scene.AddObject(&player)
 
