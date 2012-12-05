@@ -45,7 +45,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, "gl: %s\n", err)
 	}
 
-  var player ry.Object
   var scene ry.Scene
 	if err := scene.Init(); err != nil {
 		fmt.Fprintf(os.Stderr, "init: %s\n", err)
@@ -53,16 +52,26 @@ func main() {
 	}
 	defer scene.Destroy()
 
-  player.Init("model/tex.bin")
+  var player,wall ry.Object
+  wall.Init()
+  player.Init()
   var mat ry.Matrix4
   mat.Translation(0,0,-7)
-  //mat.rotate(-rotx, 0,1,0)
   mat.Rotate(-90, 1,0,0)
   player.Matrix = mat
   cc := newControlComponent(&player)
+  mesh := ry.NewMeshComponent("model/tex.bin", &player)
+  mesh.Init()
   player.AddComponent(*cc)
+  player.Mesh = mesh
+
+  mesh2 := ry.NewMeshComponent("model/tex.bin", &wall)
+  mesh2.Init()
+  wall.Mesh = mesh2
+  wall.Matrix = mat
 
   scene.AddObject(&player)
+  scene.AddObject(&wall)
 
   last_time = time.Now()
 	for glfw.WindowParam(glfw.Opened) == 1 && !exit {
