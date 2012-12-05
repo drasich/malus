@@ -55,10 +55,10 @@ func main() {
   var player,wall ry.Object
   wall.Init()
   player.Init()
-  var mat ry.Matrix4
-  mat.Translation(0,0,-7)
-  mat.Rotate(-90, 1,0,0)
-  player.Matrix = mat
+  player.Position.Z = -7
+  player.Position.X = 3
+  player.Orientation = ry.QuatAngleAxis(-45*ry.DegToRad, ry.Vec3{0,0,1})
+
   cc := newControlComponent(&player)
   mesh := ry.NewMeshComponent("model/tex.bin", &player)
   mesh.Init()
@@ -68,7 +68,7 @@ func main() {
   mesh2 := ry.NewMeshComponent("model/tex.bin", &wall)
   mesh2.Init()
   wall.Mesh = mesh2
-  wall.Matrix = mat
+  wall.Position.Z = -10
 
   scene.AddObject(&player)
   scene.AddObject(&wall)
