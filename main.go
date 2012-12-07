@@ -69,6 +69,8 @@ func main() {
   mesh2.Init()
   wall.Mesh = mesh2
   wall.Position.Z = -10
+  box := ry.NewBoxComponent(ry.Vec3{1,1,1},ry.Vec3{0,0,0})
+  wall.Box = box
 
   scene.AddObject(&player)
   scene.AddObject(&wall)
