@@ -77,6 +77,12 @@ func main() {
 
   last_time = time.Now()
 	for glfw.WindowParam(glfw.Opened) == 1 && !exit {
+    objects, positions := ry.LaunchRay( ry.Vec3{0,0,0}, ry.Vec3{0,0,-1}, 100, scene.Objects) 
+
+     if objects != nil {
+       fmt.Println("collision with one or more objects", positions[0])
+     }
+
     scene.Update()
 		scene.Draw()
 		glfw.SwapBuffers()
