@@ -69,19 +69,42 @@ func main() {
   mesh2.Init()
   wall.Mesh = mesh2
   wall.Position.Z = -10
-  box := ry.NewBoxComponent(ry.Vec3{1,1,1},ry.Vec3{0,0,0})
+  box := ry.NewBoxComponent(ry.Vec3{0,0,0},ry.Vec3{10,10,10})
   wall.Box = box
+  wall.Orientation = ry.QuatAngleAxis(-90*ry.DegToRad, ry.Vec3{0,0,1})
 
   scene.AddObject(&player)
   scene.AddObject(&wall)
 
+  //plane := ry.Plane{ry.Vec3{0,0,0}, ry.Vec3{1,1,0}}
+  ray := ry.Ray{ry.Vec3{15,-5,-5}, ry.Vec3{-100,0,0}}
+
+/*
+  b, hv := ry.IntersectionRayPlane(ray, plane)
+  if b {
+    fmt.Println("hv : ", hv)
+  } else { fmt.Println("no collision : ", hv) }
+  */
+
+  //aabox := ry.AABox{ry.Vec3{0,0,0}, ry.Vec3{10,10,10}}
+  //hit, _, pos, nor := ry.IntersectionRayAABox(ray, aabox)
+  hit, _, pos, nor := ry.IntersectionRayObject(ray, &wall)
+  if hit {
+    fmt.Println("pos and normal : ", pos, nor)
+  } else {
+    fmt.Println("no intersection with box")
+
+  }
+
   last_time = time.Now()
 	for glfw.WindowParam(glfw.Opened) == 1 && !exit {
+  /*
     objects, positions := ry.LaunchRay( ry.Vec3{0,0,0}, ry.Vec3{0,0,-1}, 100, scene.Objects) 
 
      if objects != nil {
        fmt.Println("collision with one or more objects", positions[0])
      }
+     */
 
     scene.Update()
 		scene.Draw()
